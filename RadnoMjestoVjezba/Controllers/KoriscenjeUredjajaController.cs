@@ -28,7 +28,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost("koriscenjeuredjaja/{name}/{surname}/{device}")]
-        public IActionResult KoriscenjeUredjaja(string name, string surname, string device, [FromBody]VrijemeKoriscenjaDto input)
+        public IActionResult KoriscenjeUredjaja(string name, string surname, string device)
         {
             var histotry = new KoriscenjeUrednjaja
             {

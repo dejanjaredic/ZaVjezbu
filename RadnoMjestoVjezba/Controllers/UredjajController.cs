@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RadnoMjestoVjezba.Dto;
 using RadnoMjestoVjezba.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,16 +25,20 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">property modela Uredjaj</param>
         /// <returns></returns>
         [HttpPost("kreiranjeuredjaja")]
-        public IActionResult KreiranjeUredjaja(Uredjaj input)
+        public IActionResult KreiranjeUredjaja(UredjajDto input)
         {
             if (input == null)
             {
                 return NoContent();
             }
 
-            _context.Uredjaji.Add(input);
+            var uredjaj = new Uredjaj
+            {
+                Name = input.Ime
+            };
+            _context.Uredjaji.Add(uredjaj);
             _context.SaveChanges();
-            return Ok(input.Name + " Kreiran u Tabeli Uredjaji");
+            return Ok(input.Ime + " Kreiran u Tabeli Uredjaji");
         }
         /// <summary>
         /// Izlistavanje svih Uredjaja
@@ -66,7 +71,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Property uredjaja</param>
         /// <returns></returns>
         [HttpPut("mijnjanjeuredjaja/{id}")]
-        public IActionResult MijenjanjeUredjaja(int id, Uredjaj input)
+        public IActionResult MijenjanjeUredjaja(int id, UredjajDto input)
         {
             if (id == null)
             {
@@ -74,7 +79,7 @@ namespace RadnoMjestoVjezba.Controllers
             }
 
             var uredjaji = _context.Uredjaji.Find(id);
-            uredjaji.Name = input.Name;
+            uredjaji.Name = input.Ime;
             _context.SaveChanges();
             return Ok(uredjaji.Name);
         }
@@ -92,8 +97,21 @@ namespace RadnoMjestoVjezba.Controllers
                 return NotFound();
             }
 
-            _context.Uredjaji.Remove(uredjaji);
-            _context.SaveChanges();
+            try
+            {
+                _context.Uredjaji.Remove(uredjaji);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                var greska = new GreskaDto
+                {
+                    Poruka = "Brisanje uredjaja nije dozvoljeno "
+
+                };
+                return BadRequest(greska);
+            }
+            
             return Ok("obrisano");
         }
         /// <summary>

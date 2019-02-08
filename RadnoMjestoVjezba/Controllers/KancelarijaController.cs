@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RadnoMjestoVjezba.Dto;
 using RadnoMjestoVjezba.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,14 +26,18 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Property Modela Kancelarije</param>
         /// <returns></returns>
         [HttpPost("kreiranjekancelarije")]
-        public IActionResult KreiranjeKancelarije(Kancelarija input)
+        public IActionResult KreiranjeKancelarije(KreiranjeKancelarijeDtocs input)
         {
             if (input == null)
             {
                 return BadRequest();
             }
 
-            _context.Kancelarije.Add(input);
+            var kancelarija = new Kancelarija
+            {
+                Opis = input.Opis
+            };
+            _context.Kancelarije.Add(kancelarija);
             _context.SaveChanges();
             return Ok("Kreirana Kancelarija ");
         }
@@ -70,7 +75,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Propertty Kancelarije</param>
         /// <returns></returns>
         [HttpPut("izmjenakancelarije/{id}")]
-        public IActionResult IzmjenaKancelarije(int id, Kancelarija input)
+        public IActionResult IzmjenaKancelarije(int id, KreiranjeKancelarijeDtocs input)
         {
             
             if (id == null)
@@ -78,7 +83,9 @@ namespace RadnoMjestoVjezba.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(input).State = EntityState.Modified;
+            var izmjena = _context.Kancelarije.Find(id);
+            izmjena.Opis = input.Opis;
+           // _context.Entry(input).State = EntityState.Modified;
             _context.SaveChanges();
             return Ok();
 
@@ -96,6 +103,36 @@ namespace RadnoMjestoVjezba.Controllers
                 kancelarije.Where(x => x.Opis.Contains(opis));
 
             return Ok(kancelarijeQuery.ToList());
+        }
+        /// <summary>
+        /// Metod za brisanje kancelarija, ukolika u njoj ima ljudi nije je moguce izbrisati
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("brisanjekancelarije/{id}")]
+        public IActionResult BrisanjeKancelarije(int id)
+        {
+            var kancelarija = _context.Kancelarije.Find(id);
+
+            if (id == 0)
+            {
+                return BadRequest("Id nije validan");
+            }
+
+            try
+            {
+                _context.Kancelarije.Remove(kancelarija);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                var greska = new GreskaDto
+                {
+                    Poruka = "Brisaje Kancelarije nije dozvoljeno"
+                };
+            }
+
+            return Ok("Obrisano");
         }
     }
 }

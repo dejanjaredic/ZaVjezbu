@@ -94,12 +94,12 @@ namespace RadnoMjestoVjezba.Migrations
                     b.HasOne("RadnoMjestoVjezba.Models.Osoba", "Osoba")
                         .WithMany("KoriscenjeUrednjaja")
                         .HasForeignKey("OsobaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RadnoMjestoVjezba.Models.Uredjaj", "Uredjaj")
                         .WithMany()
                         .HasForeignKey("UredjajId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("RadnoMjestoVjezba.Models.Osoba", b =>
@@ -107,7 +107,7 @@ namespace RadnoMjestoVjezba.Migrations
                     b.HasOne("RadnoMjestoVjezba.Models.Kancelarija", "Kancelarija")
                         .WithMany("Osoba")
                         .HasForeignKey("KancelarijaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

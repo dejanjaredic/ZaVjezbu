@@ -4,7 +4,7 @@
         <name>RadnoMjestoVjezba</name>
     </assembly>
     <members>
-        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.KreiranjeKancelarije(RadnoMjestoVjezba.Models.Kancelarija)">
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.KreiranjeKancelarije(RadnoMjestoVjezba.Dto.KreiranjeKancelarijeDtocs)">
             <summary>
             Kreiranje Kancelarije
             </summary>
@@ -24,7 +24,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzmjenaKancelarije(System.Int32,RadnoMjestoVjezba.Models.Kancelarija)">
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzmjenaKancelarije(System.Int32,RadnoMjestoVjezba.Dto.KreiranjeKancelarijeDtocs)">
             <summary>
             Izmjena Kancelarije Po Id
             </summary>
@@ -39,7 +39,14 @@
             <param name="opis">opis</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String,RadnoMjestoVjezba.Dto.VrijemeKoriscenjaDto)">
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.BrisanjeKancelarije(System.Int32)">
+            <summary>
+            Metod za brisanje kancelarija, ukolika u njoj ima ljudi nije je moguce izbrisati
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String)">
             <summary>
             Dodjela uredjaja nekoj osobi
             </summary>
@@ -70,7 +77,7 @@
             <param name="surname"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.Kreiranjeosobe(RadnoMjestoVjezba.Dto.OsobaDto)">
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.KreiranjeOsobe(RadnoMjestoVjezba.Dto.KreiranjeOsobeDto)">
             <summary>
             Funkcija za kreiranje nove osobe i dodjela stranog kljuca kancelarije.
             U zavisnosti od opisa posla dodjeljuje strani kljuc toj osobi
@@ -100,7 +107,7 @@
             <param name="id">id</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzmjenaPostojeceOsobe(System.Int32,RadnoMjestoVjezba.Dto.OsobaDto)">
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzmjenaPostojeceOsobe(System.Int32,RadnoMjestoVjezba.Dto.IzmjenaOsobeDto)">
             <summary>
             Izmjena propertija postojece osobe po njenom Id
             </summary>
@@ -115,7 +122,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.KreiranjeUredjaja(RadnoMjestoVjezba.Models.Uredjaj)">
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.KreiranjeUredjaja(RadnoMjestoVjezba.Dto.UredjajDto)">
             <summary>
             Kreiranje Uredjaja
             </summary>
@@ -135,7 +142,7 @@
             <param name="id">id uredjaja</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.MijenjanjeUredjaja(System.Int32,RadnoMjestoVjezba.Models.Uredjaj)">
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.MijenjanjeUredjaja(System.Int32,RadnoMjestoVjezba.Dto.UredjajDto)">
             <summary>
             Izmjena Uredjaja
             </summary>

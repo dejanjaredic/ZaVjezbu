@@ -32,7 +32,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Kreiranje Osobe</param>
         /// <returns></returns>
         [HttpPost("kreiranjesobe")]
-        public IActionResult Kreiranjeosobe([FromBody]OsobaDto input)
+        public IActionResult KreiranjeOsobe(KreiranjeOsobeDto input)
         {
             var osoba = new Osoba
             {
@@ -119,7 +119,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">parametri modela</param>
         /// <returns></returns>
         [HttpPut("izmjenapostojeceosobe/{id}")]
-        public IActionResult IzmjenaPostojeceOsobe(int id, [FromBody]OsobaDto input)
+        public IActionResult IzmjenaPostojeceOsobe(int id, IzmjenaOsobeDto input)
         {
             var osobe = _context.Osobe.Find(id);
             if (osobe == null)
@@ -145,8 +145,21 @@ namespace RadnoMjestoVjezba.Controllers
             {
                 return NotFound();
             }
-            _context.Osobe.Remove(osobe);
-            _context.SaveChanges();
+
+            try
+            {
+                _context.Osobe.Remove(osobe);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                var greska = new GreskaDto
+                {
+                    Poruka = "Brisanje Osobe nije Dozvoljeno"
+                };
+                return BadRequest(greska);
+            }
+            
             return NoContent();
         }
     }
