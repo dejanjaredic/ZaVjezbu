@@ -28,7 +28,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost("koriscenjeuredjaja/{name}/{surname}/{device}")]
-        public IActionResult KoriscenjeUredjaja(string name, string surname, string device)
+        public IActionResult KoriscenjeUredjaja(string name, string surname, string device, [FromBody] VrijemeKoriscenjaDto input)
         {
             var histotry = new KoriscenjeUrednjaja
             {
@@ -48,12 +48,17 @@ namespace RadnoMjestoVjezba.Controllers
             // --------------------- provjera koristi li neko dati uredjaj --------------------
             var korUredjaji = _context.KorisceniUredjaji;
             var korUredjajiQuery =
-                korUredjaji.Where(x => x.UredjajId == uredjajiQuery).Select(y => y.Id).FirstOrDefault();
-            if (korUredjajiQuery != 0)
+                korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Select(y => y.Id);
+            var izmjena = _context.KorisceniUredjaji.Find(korUredjajiQuery.FirstOrDefault());
+            if (korUredjajiQuery != null)
             {
-                var izmjena =_context.KorisceniUredjaji.Find(korUredjajiQuery);
+                
+                //if (izmjena.VrijemeDo == null)
+                //{
                 izmjena.VrijemeDo = DateTime.Now;
-                _context.SaveChanges();
+                    _context.SaveChanges();
+                //}
+                
             }
 
             if (osobeQuery != null && uredjajiQuery != null)
@@ -68,7 +73,7 @@ namespace RadnoMjestoVjezba.Controllers
 
             _context.KorisceniUredjaji.Add(histotry);
             _context.SaveChanges();
-            return Ok();
+            return Ok(korUredjajiQuery);
         }
         /// <summary>
         /// Brisanje istorije po id
@@ -118,6 +123,26 @@ namespace RadnoMjestoVjezba.Controllers
                 istorija.Where(x => x.OsobaId == osobeQuery);
 
             return Ok(istorijaQuery.ToList());
+        }
+
+        [HttpGet("izlistavanjepouredjaju/{ime}")]
+        public IActionResult IzlistavanjePoUredjaju(string ime)
+        {
+            // ------------------------ Izlistavanje uredjaja po imenu i vracanje njihovog Id ------------------------
+            var uredjaji = _context.Uredjaji;
+            var uredjajiQuery =
+                uredjaji.Where(x => x.Name.Contains(ime)).Select(s => s.Id).FirstOrDefault();
+            // ---------------------- Izlistavanje Istoriije uredjaja i dobijanje Id od osoba koje koriste trazeni Uredjaj --------------
+            var idOsobaUredjaja = _context.KorisceniUredjaji;
+            var idOsobaUredjajaQuery =
+                idOsobaUredjaja.Where(x => x.UredjajId == uredjajiQuery).Select(s => s.OsobaId).FirstOrDefault();
+            // ------------------------- Dobijanje Imena Osobe po dobijenom Id ----------------------------------------------
+            var imeOsobe = _context.Osobe;
+            var imeOsobeQuery =
+                imeOsobe.Where(x => x.Id == idOsobaUredjajaQuery).Select(name => name.Ime);
+
+
+            return Ok(imeOsobeQuery.ToList());
         }
 
     }

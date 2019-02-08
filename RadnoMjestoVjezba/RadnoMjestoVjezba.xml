@@ -46,7 +46,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String)">
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String,RadnoMjestoVjezba.Dto.VrijemeKoriscenjaDto)">
             <summary>
             Dodjela uredjaja nekoj osobi
             </summary>
