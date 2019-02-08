@@ -46,7 +46,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String,RadnoMjestoVjezba.Dto.VrijemeKoriscenjaDto)">
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String)">
             <summary>
             Dodjela uredjaja nekoj osobi
             </summary>
@@ -73,8 +73,15 @@
             <summary>
             prema imenu i prezimenu osobe izlistava koji uredjaj koristi
             </summary>
-            <param name="name"></param>
-            <param name="surname"></param>
+            <param name="name">Ime</param>
+            <param name="surname">Prezime</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.IzlistavanjePoUredjaju(System.String)">
+            <summary>
+            Po imenu uredjaja izbacuje osobu koja ga koristi
+            </summary>
+            <param name="ime">Ime Uredjaja</param>
             <returns></returns>
         </member>
         <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.KreiranjeOsobe(RadnoMjestoVjezba.Dto.KreiranjeOsobeDto)">

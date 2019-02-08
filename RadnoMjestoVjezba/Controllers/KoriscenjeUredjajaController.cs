@@ -28,14 +28,12 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost("koriscenjeuredjaja/{name}/{surname}/{device}")]
-        public IActionResult KoriscenjeUredjaja(string name, string surname, string device, [FromBody] VrijemeKoriscenjaDto input)
+        public IActionResult KoriscenjeUredjaja(string name, string surname, string device)
         {
             var histotry = new KoriscenjeUrednjaja
             {
-                VrijemeOd = DateTime.Now,
-                
+                VrijemeOd = DateTime.Now,   
             };
-            
             // ------------- Pretraga osobe po imenu i prezimenu i izbacivanje njenog id radi dodjele uredjaju ---------------------
             var osobe = _context.Osobe;
             var osobeQuery =
@@ -55,17 +53,12 @@ namespace RadnoMjestoVjezba.Controllers
                 korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Count();
 
             var izmjena = _context.KorisceniUredjaji.Find(korUredjajiQuery.FirstOrDefault());
+            
             if (korUredjajiBrojQuery != 0)
-            {
-                
-                //if (izmjena.VrijemeDo == null)
-                //{
+            {   
                 izmjena.VrijemeDo = DateTime.Now;
-                    _context.SaveChanges();
-                //}
-                
+                    _context.SaveChanges();   
             }
-
             if (osobeQuery != null && uredjajiQuery != null)
             {
                 histotry.OsobaId = osobeQuery;
@@ -75,7 +68,6 @@ namespace RadnoMjestoVjezba.Controllers
             {
                 return BadRequest();
             }
-
             _context.KorisceniUredjaji.Add(histotry);
             _context.SaveChanges();
             return Ok(korUredjajiQuery);
@@ -93,7 +85,6 @@ namespace RadnoMjestoVjezba.Controllers
             {
                 return BadRequest();
             }
-
             _context.KorisceniUredjaji.Remove(istorija);
             _context.SaveChanges();
             return Ok(istorija);
@@ -108,14 +99,13 @@ namespace RadnoMjestoVjezba.Controllers
             var istorija = _context.KorisceniUredjaji;
             var istorijaQuery =
                 istorija.Select(x => x);
-
             return Ok(istorijaQuery.ToList());
         }
         /// <summary>
         /// prema imenu i prezimenu osobe izlistava koji uredjaj koristi
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
+        /// <param name="name">Ime</param>
+        /// <param name="surname">Prezime</param>
         /// <returns></returns>
         [HttpGet("pretragapoosobi/{name}/{surname}")]
         public IActionResult PretragaPoOsobi(string name, string surname)
@@ -126,10 +116,13 @@ namespace RadnoMjestoVjezba.Controllers
             var istorija = _context.KorisceniUredjaji;
             var istorijaQuery =
                 istorija.Where(x => x.OsobaId == osobeQuery);
-
             return Ok(istorijaQuery.ToList());
         }
-
+        /// <summary>
+        /// Po imenu uredjaja izbacuje osobu koja ga koristi
+        /// </summary>
+        /// <param name="ime">Ime Uredjaja</param>
+        /// <returns></returns>
         [HttpGet("izlistavanjepouredjaju/{ime}")]
         public IActionResult IzlistavanjePoUredjaju(string ime)
         {
@@ -145,8 +138,6 @@ namespace RadnoMjestoVjezba.Controllers
             var imeOsobe = _context.Osobe;
             var imeOsobeQuery =
                 imeOsobe.Where(x => x.Id == idOsobaUredjajaQuery).Select(name => name.Ime);
-
-
             return Ok(imeOsobeQuery.ToList());
         }
 
