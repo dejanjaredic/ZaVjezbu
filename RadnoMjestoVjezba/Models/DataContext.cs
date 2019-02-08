@@ -16,5 +16,7 @@ namespace RadnoMjestoVjezba.Models
         public DbSet<Osoba> Osobe { get; set; }
         public DbSet<Uredjaj> Uredjaji { get; set; }
         public DbSet<KoriscenjeUrednjaja> KorisceniUredjaji { get; set; }
+
+        
     }
 }

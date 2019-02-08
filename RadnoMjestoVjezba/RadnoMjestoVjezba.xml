@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RadnoMjestoVjezba</name>
+    </assembly>
+    <members>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.KreiranjeKancelarije(RadnoMjestoVjezba.Models.Kancelarija)">
+            <summary>
+            Kreiranje Kancelarije
+            </summary>
+            <param name="input">Property Modela Kancelarije</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzlistavanjeKancelarija">
+            <summary>
+            Izlistavanje svih Kancelarija
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzlistavanjePoId(System.Int32)">
+            <summary>
+            Pretraga Kancelarije po Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzmjenaKancelarije(System.Int32,RadnoMjestoVjezba.Models.Kancelarija)">
+            <summary>
+            Izmjena Kancelarije Po Id
+            </summary>
+            <param name="id">id kancelarije</param>
+            <param name="input">Propertty Kancelarije</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.PretragaPoOpisu(System.String)">
+            <summary>
+            Pretraga Po Opisu kancelarije, ako kancelarija u opisu sadrzi rijec pretrage dobijamo podatke kancelarije
+            </summary>
+            <param name="opis">opis</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.KoriscenjeUredjaja(System.String,System.String,System.String,RadnoMjestoVjezba.Dto.VrijemeKoriscenjaDto)">
+            <summary>
+            Dodjela uredjaja nekoj osobi
+            </summary>
+            <param name="name">Ime osobe za dodjelu</param>
+            <param name="surname">Prezime Osobe za dodjelu</param>
+            <param name="device">Uredjaj koji dodjeljujemo</param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.BrisanjeIstorije(System.Int32)">
+            <summary>
+            Brisanje istorije po id
+            </summary>
+            <param name="id">id</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.IzlistavanjeIstorije">
+            <summary>
+            Izlistavanje istorije svih koriscenih uredjaja
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.PretragaPoOsobi(System.String,System.String)">
+            <summary>
+            prema imenu i prezimenu osobe izlistava koji uredjaj koristi
+            </summary>
+            <param name="name"></param>
+            <param name="surname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.Kreiranjeosobe(RadnoMjestoVjezba.Dto.OsobaDto)">
+            <summary>
+            Funkcija za kreiranje nove osobe i dodjela stranog kljuca kancelarije.
+            U zavisnosti od opisa posla dodjeljuje strani kljuc toj osobi
+            ili kreira novu kancelariju ako se opis ne podudara sa postojecom
+            </summary>
+            
+            <param name="input">Kreiranje Osobe</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.PretragaPoKoancelariji(System.String)">
+            <summary>
+            Funkcija Izlistava Osobe koje rade u kancelariji ciji opis pretrazujemo
+            </summary>
+            <param name="opis">pis kancelarije</param>
+            <returns>List</returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzlistavanjeSvihOsoba">
+            <summary>
+            Funkcija izlistava imena, prezimena i opis kancelarija u kojima rade
+            </summary>
+            <returns>list</returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzlistavanjePoId(System.Int32)">
+            <summary>
+            Izlistavanje osoba po Id
+            </summary>
+            <param name="id">id</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzmjenaPostojeceOsobe(System.Int32,RadnoMjestoVjezba.Dto.OsobaDto)">
+            <summary>
+            Izmjena propertija postojece osobe po njenom Id
+            </summary>
+            <param name="id">id</param>
+            <param name="input">parametri modela</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.BrisanjeOsobe(System.Int32)">
+            <summary>
+            Brisanje osobe na osnovu njenog id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.KreiranjeUredjaja(RadnoMjestoVjezba.Models.Uredjaj)">
+            <summary>
+            Kreiranje Uredjaja
+            </summary>
+            <param name="input">property modela Uredjaj</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.IzlistavanjeUredjaja">
+            <summary>
+            Izlistavanje svih Uredjaja
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.UredjajiPoId(System.Int32)">
+            <summary>
+            pretrazuje uredjaj po id
+            </summary>
+            <param name="id">id uredjaja</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.MijenjanjeUredjaja(System.Int32,RadnoMjestoVjezba.Models.Uredjaj)">
+            <summary>
+            Izmjena Uredjaja
+            </summary>
+            <param name="id">id</param>
+            <param name="input">Property uredjaja</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.BrisanjeUredjaja(System.Int32)">
+            <summary>
+            Brisanje Uredjaja
+            </summary>
+            <param name="id">id</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.PretragaPoImenu(System.String)">
+            <summary>
+            Pretrazivanje uredjaja op imenu
+            </summary>
+            <param name="name">ime uredjaja</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

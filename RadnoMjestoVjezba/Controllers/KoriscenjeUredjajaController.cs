@@ -19,7 +19,14 @@ namespace RadnoMjestoVjezba.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Dodjela uredjaja nekoj osobi
+        /// </summary>
+        /// <param name="name">Ime osobe za dodjelu</param>
+        /// <param name="surname">Prezime Osobe za dodjelu</param>
+        /// <param name="device">Uredjaj koji dodjeljujemo</param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost("koriscenjeuredjaja/{name}/{surname}/{device}")]
         public IActionResult KoriscenjeUredjaja(string name, string surname, string device, [FromBody]VrijemeKoriscenjaDto input)
         {
@@ -63,7 +70,11 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok();
         }
-
+        /// <summary>
+        /// Brisanje istorije po id
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         [HttpDelete("brisanjeistorije/{id}")]
         public IActionResult BrisanjeIstorije(int id)
         {
@@ -77,7 +88,10 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok(istorija);
         }
-
+        /// <summary>
+        /// Izlistavanje istorije svih koriscenih uredjaja
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("izlistavanjeistorije")]
         public IActionResult IzlistavanjeIstorije()
         {
@@ -87,7 +101,12 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(istorijaQuery.ToList());
         }
-
+        /// <summary>
+        /// prema imenu i prezimenu osobe izlistava koji uredjaj koristi
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <returns></returns>
         [HttpGet("pretragapoosobi/{name}/{surname}")]
         public IActionResult PretragaPoOsobi(string name, string surname)
         {

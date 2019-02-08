@@ -112,6 +112,12 @@ namespace RadnoMjestoVjezba.Controllers
                     {Ime = s.Ime, Prezime = s.Prezime, Kancelarija = s.Kancelarija.Opis});
             return Ok(dataQuery.ToList());
         }
+        /// <summary>
+        /// Izmjena propertija postojece osobe po njenom Id
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <param name="input">parametri modela</param>
+        /// <returns></returns>
         [HttpPut("izmjenapostojeceosobe/{id}")]
         public IActionResult IzmjenaPostojeceOsobe(int id, [FromBody]OsobaDto input)
         {
@@ -125,7 +131,11 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok(osobe);  
         }
-
+        /// <summary>
+        /// Brisanje osobe na osnovu njenog id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("brisanjeosobe/{id}")]
         public IActionResult BrisanjeOsobe(int id)
         {

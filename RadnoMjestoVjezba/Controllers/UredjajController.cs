@@ -18,7 +18,11 @@ namespace RadnoMjestoVjezba.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Kreiranje Uredjaja
+        /// </summary>
+        /// <param name="input">property modela Uredjaj</param>
+        /// <returns></returns>
         [HttpPost("kreiranjeuredjaja")]
         public IActionResult KreiranjeUredjaja(Uredjaj input)
         {
@@ -31,14 +35,21 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok(input.Name + " Kreiran u Tabeli Uredjaji");
         }
-
+        /// <summary>
+        /// Izlistavanje svih Uredjaja
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("izlistavanjesvihuredjaja")]
         public IActionResult IzlistavanjeUredjaja()
         {
             var uredjaji =_context.Uredjaji.ToList();
             return Ok(uredjaji);
         }
-
+        /// <summary>
+        /// pretrazuje uredjaj po id
+        /// </summary>
+        /// <param name="id">id uredjaja</param>
+        /// <returns></returns>
         [HttpGet("uredjajipoid/{id}")]
         public IActionResult UredjajiPoId(int id)
         {
@@ -48,7 +59,12 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(uredjajiQuery.ToList());
         }
-
+        /// <summary>
+        /// Izmjena Uredjaja
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <param name="input">Property uredjaja</param>
+        /// <returns></returns>
         [HttpPut("mijnjanjeuredjaja/{id}")]
         public IActionResult MijenjanjeUredjaja(int id, Uredjaj input)
         {
@@ -62,7 +78,11 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok(uredjaji.Name);
         }
-
+        /// <summary>
+        /// Brisanje Uredjaja
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         [HttpDelete("brisanjeuredjaja/{id}")]
         public IActionResult BrisanjeUredjaja(int id)
         {
@@ -76,7 +96,11 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok("obrisano");
         }
-
+        /// <summary>
+        /// Pretrazivanje uredjaja op imenu
+        /// </summary>
+        /// <param name="name">ime uredjaja</param>
+        /// <returns></returns>
         [HttpGet("pretragauredjajapoimenu/{name}")]
         public IActionResult PretragaPoImenu(string name)
         {

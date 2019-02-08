@@ -19,7 +19,11 @@ namespace RadnoMjestoVjezba.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Kreiranje Kancelarije
+        /// </summary>
+        /// <param name="input">Property Modela Kancelarije</param>
+        /// <returns></returns>
         [HttpPost("kreiranjekancelarije")]
         public IActionResult KreiranjeKancelarije(Kancelarija input)
         {
@@ -32,7 +36,10 @@ namespace RadnoMjestoVjezba.Controllers
             _context.SaveChanges();
             return Ok("Kreirana Kancelarija ");
         }
-
+        /// <summary>
+        /// Izlistavanje svih Kancelarija
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("izlistavanjesvihkancelarija")]
         public IActionResult IzlistavanjeKancelarija()
         {
@@ -42,7 +49,11 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(kancelarijeQuery.ToList());
         }
-
+        /// <summary>
+        /// Pretraga Kancelarije po Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("izlistavanjepoid/{id}")]
         public IActionResult IzlistavanjePoId(int id)
         {
@@ -52,7 +63,12 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(kancelarijeQuery.ToList());
         }
-
+        /// <summary>
+        /// Izmjena Kancelarije Po Id
+        /// </summary>
+        /// <param name="id">id kancelarije</param>
+        /// <param name="input">Propertty Kancelarije</param>
+        /// <returns></returns>
         [HttpPut("izmjenakancelarije/{id}")]
         public IActionResult IzmjenaKancelarije(int id, Kancelarija input)
         {
@@ -67,7 +83,11 @@ namespace RadnoMjestoVjezba.Controllers
             return Ok();
 
         }
-
+        /// <summary>
+        /// Pretraga Po Opisu kancelarije, ako kancelarija u opisu sadrzi rijec pretrage dobijamo podatke kancelarije
+        /// </summary>
+        /// <param name="opis">opis</param>
+        /// <returns></returns>
         [HttpGet("pretragapoopisu/{opis}")]
         public IActionResult PretragaPoOpisu(string opis)
         {
