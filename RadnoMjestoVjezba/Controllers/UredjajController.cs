@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RadnoMjestoVjezba.Dto;
 using RadnoMjestoVjezba.Models;
 
@@ -60,7 +61,8 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpGet("izlistavanjesvihuredjaja")]
         public IActionResult IzlistavanjeUredjaja()
         {
-            var uredjaji =_context.Uredjaji.ToList();
+            
+            var uredjaji =_context.Uredjaji.AsNoTracking().ToList();
             return Ok(uredjaji);
         }
         /// <summary>
@@ -73,7 +75,7 @@ namespace RadnoMjestoVjezba.Controllers
         {
             var uredjaji = _context.Uredjaji;
             var uredjajiQuery =
-                uredjaji.Where(x => x.Id == id);
+                uredjaji.Where(x => x.Id == id).AsNoTracking();
 
             return Ok(uredjajiQuery.ToList());
         }
@@ -86,15 +88,24 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPut("mijnjanjeuredjaja/{id}")]
         public IActionResult MijenjanjeUredjaja(int id, UredjajDto input)
         {
-            if (id == null)
-            {
-                return BadRequest();
-            }
 
-            var uredjaji = _context.Uredjaji.Find(id);
-            uredjaji.Name = input.Ime;
-            _context.SaveChanges();
-            return Ok(uredjaji.Name);
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    
+
+                    var uredjaji = _context.Uredjaji.Find(id);
+                    uredjaji.Name = input.Ime;
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return Ok(uredjaji.Name);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
+            }
         }
         /// <summary>
         /// Brisanje Uredjaja
@@ -137,7 +148,7 @@ namespace RadnoMjestoVjezba.Controllers
         {
             var uredjaji = _context.Uredjaji;
             var uredjajiQuery =
-                uredjaji.Where(x => x.Name.Contains(name));
+                uredjaji.Where(x => x.Name.Contains(name)).AsNoTracking();
 
             return Ok(uredjajiQuery.ToList());
         }

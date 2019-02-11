@@ -62,7 +62,7 @@ namespace RadnoMjestoVjezba.Controllers
         {
             var kancelarije = _context.Kancelarije;
             var kancelarijeQuery =
-                kancelarije.Select(x => x);
+                kancelarije.Select(x => x).AsNoTracking();
 
             return Ok(kancelarijeQuery.ToList());
         }
@@ -76,7 +76,7 @@ namespace RadnoMjestoVjezba.Controllers
         {
             var kancelarije = _context.Kancelarije;
             var kancelarijeQuery =
-                kancelarije.Where(x => x.Id == id);
+                kancelarije.Where(x => x.Id == id).AsNoTracking();
 
             return Ok(kancelarijeQuery.ToList());
         }
@@ -89,17 +89,29 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPut("izmjenakancelarije/{id}")]
         public IActionResult IzmjenaKancelarije(int id, KreiranjeKancelarijeDtocs input)
         {
-            
-            if (id == null)
-            {
-                return BadRequest();
-            }
 
-            var izmjena = _context.Kancelarije.Find(id);
-            izmjena.Opis = input.Opis;
-           // _context.Entry(input).State = EntityState.Modified;
-            _context.SaveChanges();
-            return Ok();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    if (id == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    var izmjena = _context.Kancelarije.Find(id);
+                    izmjena.Opis = input.Opis;
+                    // _context.Entry(input).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return Ok();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
 
         }
         /// <summary>
@@ -112,7 +124,7 @@ namespace RadnoMjestoVjezba.Controllers
         {
             var kancelarije = _context.Kancelarije;
             var kancelarijeQuery =
-                kancelarije.Where(x => x.Opis.Contains(opis));
+                kancelarije.Where(x => x.Opis.Contains(opis)).AsNoTracking();
 
             return Ok(kancelarijeQuery.ToList());
         }

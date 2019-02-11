@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RadnoMjestoVjezba.Dto;
 using RadnoMjestoVjezba.Models;
 
@@ -108,7 +109,7 @@ namespace RadnoMjestoVjezba.Controllers
         {
             var istorija = _context.KorisceniUredjaji;
             var istorijaQuery =
-                istorija.Select(x => x);
+                istorija.Select(x => x).AsNoTracking();
             return Ok(istorijaQuery.ToList());
         }
         /// <summary>
@@ -125,7 +126,7 @@ namespace RadnoMjestoVjezba.Controllers
                 osobe.Where(x => x.Ime == name && x.Prezime == surname).Select(i => i.Id).FirstOrDefault();
             var istorija = _context.KorisceniUredjaji;
             var istorijaQuery =
-                istorija.Where(x => x.OsobaId == osobeQuery);
+                istorija.Where(x => x.OsobaId == osobeQuery).AsNoTracking();
             return Ok(istorijaQuery.ToList());
         }
         /// <summary>
@@ -147,7 +148,7 @@ namespace RadnoMjestoVjezba.Controllers
             // ------------------------- Dobijanje Imena Osobe po dobijenom Id ----------------------------------------------
             var imeOsobe = _context.Osobe;
             var imeOsobeQuery =
-                imeOsobe.Where(x => x.Id == idOsobaUredjajaQuery).Select(name => name.Ime);
+                imeOsobe.Where(x => x.Id == idOsobaUredjajaQuery).Select(name => name.Ime).AsNoTracking();
             return Ok(imeOsobeQuery.ToList());
         }
 

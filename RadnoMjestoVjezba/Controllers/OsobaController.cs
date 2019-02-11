@@ -86,7 +86,7 @@ namespace RadnoMjestoVjezba.Controllers
             var getData = _context.Osobe.Include(x => x.Kancelarija);
             var getDataQuery =
                 getData.GroupBy(g => g.Kancelarija.Opis).Where(n => n.Key.Contains(opis)).Select(s =>
-                    new {OpisKancelarije = s.Key, Radnici = s.Select(n => n.Ime + " " + n.Prezime)});
+                    new {OpisKancelarije = s.Key, Radnici = s.Select(n => n.Ime + " " + n.Prezime)}).AsNoTracking();
             return Ok(getDataQuery.ToList());
         }
         /// <summary>
@@ -122,7 +122,7 @@ namespace RadnoMjestoVjezba.Controllers
             var getData = _context.Osobe;
             var dataQuery =
                 getData.Where(x => x.Id == id).Select(s => new
-                    {Ime = s.Ime, Prezime = s.Prezime, Kancelarija = s.Kancelarija.Opis});
+                    {Ime = s.Ime, Prezime = s.Prezime, Kancelarija = s.Kancelarija.Opis}).AsNoTracking();
             return Ok(dataQuery.ToList());
         }
         /// <summary>
@@ -134,15 +134,27 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPut("izmjenapostojeceosobe/{id}")]
         public IActionResult IzmjenaPostojeceOsobe(int id, IzmjenaOsobeDto input)
         {
-            var osobe = _context.Osobe.Find(id);
-            if (osobe == null)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return NotFound();
+                try
+                {
+                    var osobe = _context.Osobe.Find(id);
+                    if (osobe == null)
+                    {
+                        return NotFound();
+                    }
+                    osobe.Ime = input.Ime;
+                    osobe.Prezime = input.Prezime;
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return Ok(osobe);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
-            osobe.Ime = input.Ime;
-            osobe.Prezime = input.Prezime;
-            _context.SaveChanges();
-            return Ok(osobe);  
         }
         /// <summary>
         /// Brisanje osobe na osnovu njenog id
