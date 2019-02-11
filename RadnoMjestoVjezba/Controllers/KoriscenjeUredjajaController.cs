@@ -52,14 +52,10 @@ namespace RadnoMjestoVjezba.Controllers
                     var korUredjaji = _context.KorisceniUredjaji;
                     var korUredjajiQuery =
                         korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Select(y => y.Id);
-                    //---------------------------- Broj pronadjenih uredjaja ------------------------------
-                    var korUredjajiBroj = _context.KorisceniUredjaji;
-                    var korUredjajiBrojQuery =
-                        korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Count();
 
                     var izmjena = _context.KorisceniUredjaji.Find(korUredjajiQuery.FirstOrDefault());
 
-                    if (korUredjajiBrojQuery != 0)
+                    if (korUredjajiQuery.Count() != 0)
                     {
                         izmjena.VrijemeDo = DateTime.Now;
                         _context.SaveChanges();
