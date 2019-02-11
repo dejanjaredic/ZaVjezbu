@@ -34,33 +34,46 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPost("kreiranjesobe")]
         public IActionResult KreiranjeOsobe(KreiranjeOsobeDto input)
         {
-            var osoba = new Osoba
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                Ime = input.Ime,
-                Prezime = input.Prezime,  
-            };
-            var sveKancelarije = _context.Kancelarije;
-            var sveKancelarijeQuery = sveKancelarije.Select(x => x.Opis);
-            if (sveKancelarijeQuery.Contains(input.Kancelarija.Opis) )
-            {
-                var getKancelarijaId = _context.Kancelarije;
-                var getKancelarijaQuery =
-                    getKancelarijaId.Where(x => x.Opis.Contains(input.Kancelarija.Opis)).Select(y => y.Id).FirstOrDefault();
-                if (getKancelarijaQuery != null)
+                try
                 {
-                    osoba.KancelarijaId = getKancelarijaQuery;
+                    var osoba = new Osoba
+                    {
+                        Ime = input.Ime,
+                        Prezime = input.Prezime,
+                    };
+                    var sveKancelarije = _context.Kancelarije;
+                    var sveKancelarijeQuery = sveKancelarije.Select(x => x.Opis);
+                    if (sveKancelarijeQuery.Contains(input.Kancelarija.Opis))
+                    {
+                        var getKancelarijaId = _context.Kancelarije;
+                        var getKancelarijaQuery =
+                            getKancelarijaId.Where(x => x.Opis.Contains(input.Kancelarija.Opis)).Select(y => y.Id).FirstOrDefault();
+                        if (getKancelarijaQuery != null)
+                        {
+                            osoba.KancelarijaId = getKancelarijaQuery;
+                        }
+                    }
+                    else
+                    {
+                        osoba.Kancelarija = new Kancelarija
+                        {
+                            Opis = input.Kancelarija.Opis
+                        };
+                    }
+                    _context.Osobe.Add(osoba);
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+                    return Ok(osoba.ToString());
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
                 }
             }
-            else
-            {
-                osoba.Kancelarija = new Kancelarija
-                {
-                    Opis = input.Kancelarija.Opis
-                };
-            }
-            _context.Osobe.Add(osoba);
-            _context.SaveChanges();
-            return Ok(osoba);  
+            
         }
         /// <summary>
         /// Funkcija Izlistava Osobe koje rade u kancelariji ciji opis pretrazujemo

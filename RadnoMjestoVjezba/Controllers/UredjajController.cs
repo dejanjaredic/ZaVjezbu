@@ -27,18 +27,31 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPost("kreiranjeuredjaja")]
         public IActionResult KreiranjeUredjaja(UredjajDto input)
         {
-            if (input == null)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return NoContent();
-            }
+                try
+                {
+                    if (input == null)
+                    {
+                        return NoContent();
+                    }
 
-            var uredjaj = new Uredjaj
-            {
-                Name = input.Ime
-            };
-            _context.Uredjaji.Add(uredjaj);
-            _context.SaveChanges();
-            return Ok(input.Ime + " Kreiran u Tabeli Uredjaji");
+                    var uredjaj = new Uredjaj
+                    {
+                        Name = input.Ime
+                    };
+                    _context.Uredjaji.Add(uredjaj);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return Ok(input.Ime + " Kreiran u Tabeli Uredjaji");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+           
         }
         /// <summary>
         /// Izlistavanje svih Uredjaja

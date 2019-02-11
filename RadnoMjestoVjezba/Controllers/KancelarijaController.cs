@@ -28,18 +28,30 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPost("kreiranjekancelarije")]
         public IActionResult KreiranjeKancelarije(KreiranjeKancelarijeDtocs input)
         {
-            if (input == null)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return BadRequest();
-            }
+                try
+                {
+                    if (input == null)
+                    {
+                        return BadRequest();
+                    }
 
-            var kancelarija = new Kancelarija
-            {
-                Opis = input.Opis
-            };
-            _context.Kancelarije.Add(kancelarija);
-            _context.SaveChanges();
-            return Ok("Kreirana Kancelarija ");
+                    var kancelarija = new Kancelarija
+                    {
+                        Opis = input.Opis
+                    };
+                    _context.Kancelarije.Add(kancelarija);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return Ok("Kreirana Kancelarija ");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
+            }
+                
         }
         /// <summary>
         /// Izlistavanje svih Kancelarija

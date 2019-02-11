@@ -30,47 +30,61 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpPost("koriscenjeuredjaja/{name}/{surname}/{device}")]
         public IActionResult KoriscenjeUredjaja(string name, string surname, string device)
         {
-            var histotry = new KoriscenjeUrednjaja
+
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                VrijemeOd = DateTime.Now,   
-            };
-            // ------------- Pretraga osobe po imenu i prezimenu i izbacivanje njenog id radi dodjele uredjaju ---------------------
-            var osobe = _context.Osobe;
-            var osobeQuery =
-                osobe.Where(x => x.Ime.Equals(name) && x.Prezime.Equals(surname)).Select(osoba => osoba.Id).FirstOrDefault();
-            // ------------------ Pretraga uredjaja i izbacivanje njegovog id --------------------
-            var uredjaji = _context.Uredjaji;
-            var uredjajiQuery =
-                uredjaji.Where(x => x.Name.Equals(device)).Select(d => d.Id).FirstOrDefault();
+                try
+                {
+                    var histotry = new KoriscenjeUrednjaja
+                    {
+                        VrijemeOd = DateTime.Now,
+                    };
+                    // ------------- Pretraga osobe po imenu i prezimenu i izbacivanje njenog id radi dodjele uredjaju ---------------------
+                    var osobe = _context.Osobe;
+                    var osobeQuery =
+                        osobe.Where(x => x.Ime.Equals(name) && x.Prezime.Equals(surname)).Select(osoba => osoba.Id).FirstOrDefault();
+                    // ------------------ Pretraga uredjaja i izbacivanje njegovog id --------------------
+                    var uredjaji = _context.Uredjaji;
+                    var uredjajiQuery =
+                        uredjaji.Where(x => x.Name.Equals(device)).Select(d => d.Id).FirstOrDefault();
 
-            // --------------------- provjera koristi li neko dati uredjaj --------------------
-            var korUredjaji = _context.KorisceniUredjaji;
-            var korUredjajiQuery =
-                korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Select(y => y.Id);
-            //---------------------------- Broj pronadjenih uredjaja ------------------------------
-            var korUredjajiBroj = _context.KorisceniUredjaji;
-            var korUredjajiBrojQuery =
-                korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Count();
+                    // --------------------- provjera koristi li neko dati uredjaj --------------------
+                    var korUredjaji = _context.KorisceniUredjaji;
+                    var korUredjajiQuery =
+                        korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Select(y => y.Id);
+                    //---------------------------- Broj pronadjenih uredjaja ------------------------------
+                    var korUredjajiBroj = _context.KorisceniUredjaji;
+                    var korUredjajiBrojQuery =
+                        korUredjaji.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Count();
 
-            var izmjena = _context.KorisceniUredjaji.Find(korUredjajiQuery.FirstOrDefault());
+                    var izmjena = _context.KorisceniUredjaji.Find(korUredjajiQuery.FirstOrDefault());
+
+                    if (korUredjajiBrojQuery != 0)
+                    {
+                        izmjena.VrijemeDo = DateTime.Now;
+                        _context.SaveChanges();
+                    }
+                    if (osobeQuery != null && uredjajiQuery != null)
+                    {
+                        histotry.OsobaId = osobeQuery;
+                        histotry.UredjajId = uredjajiQuery;
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                    _context.KorisceniUredjaji.Add(histotry);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return Ok(korUredjajiQuery.ToString());
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
+            }
             
-            if (korUredjajiBrojQuery != 0)
-            {   
-                izmjena.VrijemeDo = DateTime.Now;
-                    _context.SaveChanges();   
-            }
-            if (osobeQuery != null && uredjajiQuery != null)
-            {
-                histotry.OsobaId = osobeQuery;
-                histotry.UredjajId = uredjajiQuery;
-            }
-            else
-            {
-                return BadRequest();
-            }
-            _context.KorisceniUredjaji.Add(histotry);
-            _context.SaveChanges();
-            return Ok(korUredjajiQuery);
+            
         }
         /// <summary>
         /// Brisanje istorije po id
