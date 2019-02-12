@@ -84,7 +84,12 @@ namespace RadnoMjestoVjezba.Controllers
             
             
         }
-        
+        /// <summary>
+        /// Pretraga po imenu i prezimenu osobe koji uredjaj koristi
+        /// </summary>
+        /// <param name="name">Ime Osobe</param>
+        /// <param name="surname">Prezime Osobe</param>
+        /// <returns></returns>
         [HttpGet("pretragapoosobi/{name}/{surname}")]
         public virtual IActionResult PretragaPoOsobi(string name, string surname)
         {

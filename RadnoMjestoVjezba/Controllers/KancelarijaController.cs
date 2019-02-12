@@ -20,11 +20,11 @@ namespace RadnoMjestoVjezba.Controllers
         public KancelarijaController(DataContext context) : base(context)
         {
         }
-         ///<summary>
-        /// Pretraga Po Opisu kancelarije, ako kancelarija u opisu sadrzi rijec pretrage dobijamo podatke kancelarije
-         ///</summary>
-         ///<param name = "opis" > opis </ param >
-         ///< returns ></ returns >
+        /// <summary>
+        /// Pretraga Kancelarije po opisu
+        /// </summary>
+        /// <param name="opis">Opis Kancelarije</param>
+        /// <returns></returns>
         [HttpGet("pretragapoopisu/{opis}")]
         public virtual IActionResult PretragaPoOpisu(string opis)
         {

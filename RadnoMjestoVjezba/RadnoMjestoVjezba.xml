@@ -32,7 +32,41 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:RadnoMjestoVjezba.Controllers.KancelarijaController.PretragaPoOpisu(System.String)" -->
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.PretragaPoOpisu(System.String)">
+            <summary>
+            Pretraga Kancelarije po opisu
+            </summary>
+            <param name="opis">Opis Kancelarije</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.GetAllData">
+            <summary>
+            Izlistavanje svih Kancelarija
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.DeleteData(System.Int32)">
+            <summary>
+            Brisanje postojecih kancelarija po Id
+            </summary>
+            <param name="id">Id kancelarije</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.GetDataById(System.Int32)">
+            <summary>
+            Pretraga Kancelarije po Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Models.Kancelarija)">
+            <summary>
+            Izmjena propertija postojece Kancelarije
+            </summary>
+            <param name="id">id Kancelarije Za izmjenu</param>
+            <param name="input">Opis Kancelarije</param>
+            <returns></returns>
+        </member>
         <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.AddData(System.String,System.String,System.String)">
             <summary>
             Dodjela uredjaja nekoj osobi
@@ -43,11 +77,39 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.PretragaPoOsobi(System.String,System.String)">
+            <summary>
+            Pretraga po imenu i prezimenu osobe koji uredjaj koristi
+            </summary>
+            <param name="name">Ime Osobe</param>
+            <param name="surname">Prezime Osobe</param>
+            <returns></returns>
+        </member>
         <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.IzlistavanjePoUredjaju(System.String)">
             <summary>
             Po imenu uredjaja izbacuje osobu koja ga koristi
             </summary>
             <param name="ime">Ime Uredjaja</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.GetAllData">
+            <summary>
+            Izlistavanje kompletne istorije koriscenja uredjaja
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.DeleteData(System.Int32)">
+            <summary>
+            brisanje zapisa po Id
+            </summary>
+            <param name="id">Id zapisa</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.KoriscenjeUredjajaController.GetDataById(System.Int32)">
+            <summary>
+            Pretraga po Id
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.AddData(RadnoMjestoVjezba.Dto.KreiranjeOsobeDto)">
@@ -66,6 +128,34 @@
             </summary>
             <param name="opis">pis kancelarije</param>
             <returns>List</returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Dto.IzmjenaOsobeDto)">
+            <summary>
+            Izmjena postojece Osobe po Id
+            </summary>
+            <param name="id">Id</param>
+            <param name="input">Ime prezime</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.GetAllData">
+            <summary>
+            Izlistavanje svih osoba
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.DeleteData(System.Int32)">
+            <summary>
+            brisanje osoba po zadatom id
+            </summary>
+            <param name="id">Id osobe</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.GetDataById(System.Int32)">
+            <summary>
+            Pretraga Osobe po Id
+            </summary>
+            <param name="id">Id osobe za pretragu</param>
+            <returns></returns>
         </member>
         <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.GetAllData">
             <summary>

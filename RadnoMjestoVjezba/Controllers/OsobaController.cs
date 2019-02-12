@@ -88,7 +88,12 @@ namespace RadnoMjestoVjezba.Controllers
                     new {OpisKancelarije = s.Key, Radnici = s.Select(n => n.Ime + " " + n.Prezime)}).AsNoTracking();
             return Ok(getDataQuery.ToList());
         }
-
+        /// <summary>
+        /// Izmjena postojece Osobe po Id
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <param name="input">Ime prezime</param>
+        /// <returns></returns>
         [HttpPut("izmjenapostojeceosobe/{id}")]
         public virtual IActionResult IzmjenaPoId(int id, IzmjenaOsobeDto input)
         {
