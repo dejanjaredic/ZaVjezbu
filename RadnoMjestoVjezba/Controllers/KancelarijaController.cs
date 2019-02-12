@@ -34,5 +34,28 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(kancelarijeQuery.ToList());
         }
+        [HttpGet("getalldata")]
+        public IActionResult GetAllData()
+        {
+            return base.GetAllData();
+        }
+
+        [HttpDelete("brisanjepoid")]
+        public IActionResult DeleteData(int id)
+        {
+            return base.DeleteData(id);
+        }
+
+        [HttpGet("prettragapoid")]
+        public IActionResult GetDataById(int id)
+        {
+            return base.GetDataById(id);
+        }
+        [HttpPut("izmjenapoid/{id}")]
+        public IActionResult IzmjenaPoId(int id, Kancelarija input)
+        {
+            return base.IzmjenaPoId(id, input);
+        }
+
     }
 }

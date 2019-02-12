@@ -23,13 +23,14 @@ namespace RadnoMjestoVjezba.Controllers
             _context = context;
             _dbSet = _context.Set<T>();
         }
+
         // GET: api/<controller>
         /// <summary>
         /// Izlistavanje svih Entiteta iz Tabele
         /// </summary>
         /// <returns>list</returns>
         [HttpGet("getalldata")]
-        public virtual IActionResult GetAllData()
+        protected virtual IActionResult GetAllData()
         {
             var getAll = _dbSet;
             
@@ -44,7 +45,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="id">id</param>
         /// <returns></returns>
         [HttpDelete("delete/{id}")]
-        public virtual IActionResult DeleteData(int id)
+        protected virtual IActionResult DeleteData(int id)
         {
             var deleteData = _dbSet.Find(id);
             if (deleteData == null)
@@ -76,7 +77,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("getbyid/{id}")]
-        public virtual IActionResult EditData(int id)
+        protected virtual IActionResult GetDataById(int id)
         {
             
             var uredjaji = _dbSet.Find(id);
@@ -84,7 +85,7 @@ namespace RadnoMjestoVjezba.Controllers
         }
 
         [HttpPost("adddata")]
-        public virtual IActionResult AddData(T input)
+        protected virtual IActionResult AddData(T input)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -115,7 +116,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut("mijenjanje/{id}")]
-        public virtual IActionResult IzmjenaPoId(int id, T input)
+        protected virtual IActionResult IzmjenaPoId(int id, T input)
         {
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -138,6 +139,7 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
+
         
 
     }

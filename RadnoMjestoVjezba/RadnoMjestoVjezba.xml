@@ -17,7 +17,7 @@
             <param name="id">id</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`1.EditData(System.Int32)">
+        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`1.GetDataById(System.Int32)">
             <summary>
             Pretraga entiteta po Id
             </summary>

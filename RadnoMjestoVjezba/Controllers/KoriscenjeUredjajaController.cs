@@ -111,12 +111,29 @@ namespace RadnoMjestoVjezba.Controllers
             // ---------------------- Izlistavanje Istoriije uredjaja i dobijanje Id od osoba koje koriste trazeni Uredjaj --------------
             var idOsobaUredjaja = _context.KorisceniUredjaji;
             var idOsobaUredjajaQuery =
-                idOsobaUredjaja.Where(x => x.UredjajId == uredjajiQuery).Select(s => s.OsobaId).FirstOrDefault();
+                idOsobaUredjaja.Where(x => x.UredjajId == uredjajiQuery && x.VrijemeDo == null).Select(s => s.OsobaId).FirstOrDefault();
             // ------------------------- Dobijanje Imena Osobe po dobijenom Id ----------------------------------------------
             var imeOsobe = _context.Osobe;
             var imeOsobeQuery =
                 imeOsobe.Where(x => x.Id == idOsobaUredjajaQuery).Select(name => name.Ime).AsNoTracking();
             return Ok(imeOsobeQuery.ToList());
+        }
+        [HttpGet("getalldata")]
+        public IActionResult GetAllData()
+        {
+            return base.GetAllData();
+        }
+
+        [HttpDelete("brisanjepoid")]
+        public IActionResult DeleteData(int id)
+        {
+            return base.DeleteData(id);
+        }
+
+        [HttpGet("prettragapoid")]
+        public IActionResult GetDataById(int id)
+        {
+            return base.GetDataById(id);
         }
 
     }

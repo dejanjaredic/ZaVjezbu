@@ -114,6 +114,23 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
+        [HttpGet("getalldata")]
+        public IActionResult GetAllData()
+        {
+            return base.GetAllData();
+        }
+
+        [HttpDelete("brisanjepoid")]
+        public IActionResult DeleteData(int id)
+        {
+            return base.DeleteData(id);
+        }
+
+        [HttpGet("prettragapoid")]
+        public IActionResult GetDataById(int id)
+        {
+            return base.GetDataById(id);
+        }
 
     }
 }
