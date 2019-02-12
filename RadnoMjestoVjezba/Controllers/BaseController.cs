@@ -24,6 +24,10 @@ namespace RadnoMjestoVjezba.Controllers
             _dbSet = _context.Set<T>();
         }
         // GET: api/<controller>
+        /// <summary>
+        /// Izlistavanje svih Entiteta iz Tabele
+        /// </summary>
+        /// <returns>list</returns>
         [HttpGet("getalldata")]
         public virtual IActionResult GetAllData()
         {
@@ -34,7 +38,11 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(getAllQuery.ToList());
         }
-
+        /// <summary>
+        /// Brisanje entiteta po zadatom Id
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         [HttpDelete("delete/{id}")]
         public virtual IActionResult DeleteData(int id)
         {
@@ -62,8 +70,13 @@ namespace RadnoMjestoVjezba.Controllers
             return Ok(deleteData);
 
         }
+        /// <summary>
+        /// Pretraga entiteta po Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("getbyid/{id}")]
-        public virtual IActionResult UredjajiPoId(int id)
+        public virtual IActionResult EditData(int id)
         {
             
             var uredjaji = _dbSet.Find(id);
@@ -95,6 +108,12 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
+        /// <summary>
+        /// Izmjena entiteta po Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPut("mijenjanje/{id}")]
         public virtual IActionResult IzmjenaPoId(int id, T input)
         {
@@ -119,6 +138,7 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
+        
 
     }
 }

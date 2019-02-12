@@ -17,7 +17,7 @@ namespace RadnoMjestoVjezba.Controllers
     [Route("api/[controller]")]
     public class OsobaController : BaseController<Osoba>
     {
-        protected readonly DataContext _context;
+        //protected readonly DataContext _context;
         public OsobaController(DataContext context) : base(context)
         {
         }
@@ -31,8 +31,9 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Kreiranje Osobe</param>
         /// <returns></returns>
         [HttpPost("kreiranjesobe")]
-        public IActionResult KreiranjeOsobe(KreiranjeOsobeDto input)
+        public virtual IActionResult AddData(KreiranjeOsobeDto input)
         {
+            //return base.AddData(input);
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -72,7 +73,6 @@ namespace RadnoMjestoVjezba.Controllers
                     return BadRequest();
                 }
             }
-            
         }
         /// <summary>
         /// Funkcija Izlistava Osobe koje rade u kancelariji ciji opis pretrazujemo
@@ -80,7 +80,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="opis">pis kancelarije</param>
         /// <returns>List</returns>
         [HttpGet("pretragaosobapokancelariji/{opis}")]
-        public IActionResult PretragaPoKoancelariji(string opis)
+        public virtual IActionResult PretragaPoKoancelariji(string opis)
         {
             var getData = _context.Osobe.Include(x => x.Kancelarija);
             var getDataQuery =
@@ -88,28 +88,9 @@ namespace RadnoMjestoVjezba.Controllers
                     new {OpisKancelarije = s.Key, Radnici = s.Select(n => n.Ime + " " + n.Prezime)}).AsNoTracking();
             return Ok(getDataQuery.ToList());
         }
-        
-        //[HttpGet("izlistavanjepoid/{id}")]
-        //public IActionResult IzlistavanjePoId(int id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    var getData = _context.Osobe;
-        //    var dataQuery =
-        //        getData.Where(x => x.Id == id).Select(s => new
-        //            {Ime = s.Ime, Prezime = s.Prezime, Kancelarija = s.Kancelarija.Opis}).AsNoTracking();
-        //    return Ok(dataQuery.ToList());
-        //}
-        /// <summary>
-        /// Izmjena propertija postojece osobe po njenom Id
-        /// </summary>
-        /// <param name="id">id</param>
-        /// <param name="input">parametri modela</param>
-        /// <returns></returns>
+
         [HttpPut("izmjenapostojeceosobe/{id}")]
-        public IActionResult IzmjenaPostojeceOsobe(int id, IzmjenaOsobeDto input)
+        public virtual IActionResult IzmjenaPoId(int id, IzmjenaOsobeDto input)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -133,6 +114,6 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
-       
+
     }
 }

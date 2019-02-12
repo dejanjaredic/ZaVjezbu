@@ -12,14 +12,15 @@ using RadnoMjestoVjezba.Models;
 namespace RadnoMjestoVjezba.Controllers
 {
     [Route("api/[controller]")]
-    public class KoriscenjeUredjajaController : Controller
+    public class KoriscenjeUredjajaController : BaseController<KoriscenjeUrednjaja>
     {
-        protected readonly DataContext _context;
+        //protected readonly DataContext _context;
 
-        public KoriscenjeUredjajaController(DataContext context)
-        {
-            _context = context;
+
+        public KoriscenjeUredjajaController(DataContext context) : base(context)
+        {  
         }
+
         /// <summary>
         /// Dodjela uredjaja nekoj osobi
         /// </summary>
@@ -29,7 +30,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost("koriscenjeuredjaja/{name}/{surname}/{device}")]
-        public IActionResult KoriscenjeUredjaja(string name, string surname, string device)
+        public virtual IActionResult AddData(string name, string surname, string device)
         {
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -83,43 +84,9 @@ namespace RadnoMjestoVjezba.Controllers
             
             
         }
-        /// <summary>
-        /// Brisanje istorije po id
-        /// </summary>
-        /// <param name="id">id</param>
-        /// <returns></returns>
-        [HttpDelete("brisanjeistorije/{id}")]
-        public IActionResult BrisanjeIstorije(int id)
-        {
-            var istorija = _context.KorisceniUredjaji.Find(id);
-            if (istorija == null)
-            {
-                return BadRequest();
-            }
-            _context.KorisceniUredjaji.Remove(istorija);
-            _context.SaveChanges();
-            return Ok(istorija);
-        }
-        /// <summary>
-        /// Izlistavanje istorije svih koriscenih uredjaja
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("izlistavanjeistorije")]
-        public IActionResult IzlistavanjeIstorije()
-        {
-            var istorija = _context.KorisceniUredjaji;
-            var istorijaQuery =
-                istorija.Select(x => x).AsNoTracking();
-            return Ok(istorijaQuery.ToList());
-        }
-        /// <summary>
-        /// prema imenu i prezimenu osobe izlistava koji uredjaj koristi
-        /// </summary>
-        /// <param name="name">Ime</param>
-        /// <param name="surname">Prezime</param>
-        /// <returns></returns>
+        
         [HttpGet("pretragapoosobi/{name}/{surname}")]
-        public IActionResult PretragaPoOsobi(string name, string surname)
+        public virtual IActionResult PretragaPoOsobi(string name, string surname)
         {
             var osobe = _context.Osobe;
             var osobeQuery =
@@ -135,7 +102,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="ime">Ime Uredjaja</param>
         /// <returns></returns>
         [HttpGet("izlistavanjepouredjaju/{ime}")]
-        public IActionResult IzlistavanjePoUredjaju(string ime)
+        public virtual IActionResult IzlistavanjePoUredjaju(string ime)
         {
             // ------------------------ Izlistavanje uredjaja po imenu i vracanje njihovog Id ------------------------
             var uredjaji = _context.Uredjaji;
