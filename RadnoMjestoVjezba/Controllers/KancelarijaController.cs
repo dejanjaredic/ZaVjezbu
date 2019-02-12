@@ -34,23 +34,41 @@ namespace RadnoMjestoVjezba.Controllers
 
             return Ok(kancelarijeQuery.ToList());
         }
+        /// <summary>
+        /// Izlistavanje svih Kancelarija
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("getalldata")]
         public IActionResult GetAllData()
         {
             return base.GetAllData();
         }
-
+        /// <summary>
+        /// Brisanje postojecih kancelarija po Id
+        /// </summary>
+        /// <param name="id">Id kancelarije</param>
+        /// <returns></returns>
         [HttpDelete("brisanjepoid")]
         public IActionResult DeleteData(int id)
         {
             return base.DeleteData(id);
         }
-
+        /// <summary>
+        /// Pretraga Kancelarije po Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("prettragapoid")]
         public IActionResult GetDataById(int id)
         {
             return base.GetDataById(id);
         }
+        /// <summary>
+        /// Izmjena propertija postojece Kancelarije
+        /// </summary>
+        /// <param name="id">id Kancelarije Za izmjenu</param>
+        /// <param name="input">Opis Kancelarije</param>
+        /// <returns></returns>
         [HttpPut("izmjenapoid/{id}")]
         public IActionResult IzmjenaPoId(int id, Kancelarija input)
         {

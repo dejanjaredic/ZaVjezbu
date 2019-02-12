@@ -114,18 +114,30 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
+        /// <summary>
+        /// Izlistavanje svih osoba
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("getalldata")]
         public IActionResult GetAllData()
         {
             return base.GetAllData();
         }
-
+        /// <summary>
+        /// brisanje osoba po zadatom id
+        /// </summary>
+        /// <param name="id">Id osobe</param>
+        /// <returns></returns>
         [HttpDelete("brisanjepoid")]
         public IActionResult DeleteData(int id)
         {
             return base.DeleteData(id);
         }
-
+        /// <summary>
+        /// Pretraga Osobe po Id
+        /// </summary>
+        /// <param name="id">Id osobe za pretragu</param>
+        /// <returns></returns>
         [HttpGet("prettragapoid")]
         public IActionResult GetDataById(int id)
         {

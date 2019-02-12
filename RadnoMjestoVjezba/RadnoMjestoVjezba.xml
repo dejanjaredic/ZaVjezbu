@@ -67,5 +67,40 @@
             <param name="opis">pis kancelarije</param>
             <returns>List</returns>
         </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.GetAllData">
+            <summary>
+            Izlistavanje svih Uredjaja
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.DeleteData(System.Int32)">
+            <summary>
+            Brisanje uredjaja po Id
+            </summary>
+            <param name="id">id uredjaja</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.GetDataById(System.Int32)">
+            <summary>
+            Pretraga uredjaja po Id
+            </summary>
+            <param name="id">id uredjaja</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.AddData(RadnoMjestoVjezba.Models.Uredjaj)">
+            <summary>
+            Kreiranje novog uredjaja
+            </summary>
+            <param name="input">Podaci za unos. Napomena !!! Id se ne unosi</param>
+            <returns></returns>
+        </member>
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Models.Uredjaj)">
+            <summary>
+            Izmjena propertija postojeceg uredjaja
+            </summary>
+            <param name="id">id uredjaja koji zelimo da izmijenjamo</param>
+            <param name="input">ime uredjaja</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

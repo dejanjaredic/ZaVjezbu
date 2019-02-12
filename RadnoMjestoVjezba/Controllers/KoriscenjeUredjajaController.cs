@@ -118,18 +118,30 @@ namespace RadnoMjestoVjezba.Controllers
                 imeOsobe.Where(x => x.Id == idOsobaUredjajaQuery).Select(name => name.Ime).AsNoTracking();
             return Ok(imeOsobeQuery.ToList());
         }
+        /// <summary>
+        /// Izlistavanje kompletne istorije koriscenja uredjaja
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("getalldata")]
         public IActionResult GetAllData()
         {
             return base.GetAllData();
         }
-
+        /// <summary>
+        /// brisanje zapisa po Id
+        /// </summary>
+        /// <param name="id">Id zapisa</param>
+        /// <returns></returns>
         [HttpDelete("brisanjepoid")]
         public IActionResult DeleteData(int id)
         {
             return base.DeleteData(id);
         }
-
+        /// <summary>
+        /// Pretraga po Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("prettragapoid")]
         public IActionResult GetDataById(int id)
         {
