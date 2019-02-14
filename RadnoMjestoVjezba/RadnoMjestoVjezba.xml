@@ -4,27 +4,27 @@
         <name>RadnoMjestoVjezba</name>
     </assembly>
     <members>
-        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`1.GetAllData">
+        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`2.GetAllData">
             <summary>
             Izlistavanje svih Entiteta iz Tabele
             </summary>
             <returns>list</returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`1.DeleteData(System.Int32)">
+        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`2.DeleteData(System.Int32)">
             <summary>
             Brisanje entiteta po zadatom Id
             </summary>
             <param name="id">id</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`1.GetDataById(System.Int32)">
+        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`2.GetDataById(System.Int32)">
             <summary>
             Pretraga entiteta po Id
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`1.IzmjenaPoId(System.Int32,`0)">
+        <member name="M:RadnoMjestoVjezba.Controllers.BaseController`2.IzmjenaPoId(System.Int32,`1)">
             <summary>
             Izmjena entiteta po Id
             </summary>
@@ -59,7 +59,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Models.Kancelarija)">
+        <member name="M:RadnoMjestoVjezba.Controllers.KancelarijaController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Dto.KreiranjeKancelarijeDtocs)">
             <summary>
             Izmjena propertija postojece Kancelarije
             </summary>
@@ -129,7 +129,7 @@
             <param name="opis">pis kancelarije</param>
             <returns>List</returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Dto.IzmjenaOsobeDto)">
+        <member name="M:RadnoMjestoVjezba.Controllers.OsobaController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Dto.KreiranjeOsobeDto)">
             <summary>
             Izmjena postojece Osobe po Id
             </summary>
@@ -177,14 +177,14 @@
             <param name="id">id uredjaja</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.AddData(RadnoMjestoVjezba.Models.Uredjaj)">
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.AddData(RadnoMjestoVjezba.Dto.UredjajDto)">
             <summary>
             Kreiranje novog uredjaja
             </summary>
             <param name="input">Podaci za unos. Napomena !!! Id se ne unosi</param>
             <returns></returns>
         </member>
-        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Models.Uredjaj)">
+        <member name="M:RadnoMjestoVjezba.Controllers.UredjajController.IzmjenaPoId(System.Int32,RadnoMjestoVjezba.Dto.UredjajDto)">
             <summary>
             Izmjena propertija postojeceg uredjaja
             </summary>

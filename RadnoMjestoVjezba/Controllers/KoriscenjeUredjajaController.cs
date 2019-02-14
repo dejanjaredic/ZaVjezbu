@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RadnoMjestoVjezba.Dto;
@@ -12,12 +13,12 @@ using RadnoMjestoVjezba.Models;
 namespace RadnoMjestoVjezba.Controllers
 {
     [Route("api/[controller]")]
-    public class KoriscenjeUredjajaController : BaseController<KoriscenjeUrednjaja>
+    public class KoriscenjeUredjajaController : BaseController<KoriscenjeUrednjaja, VrijemeKoriscenjaDto>
     {
         //protected readonly DataContext _context;
 
 
-        public KoriscenjeUredjajaController(DataContext context) : base(context)
+        public KoriscenjeUredjajaController(DataContext context, IMapper mapper) : base(context, mapper)
         {  
         }
 

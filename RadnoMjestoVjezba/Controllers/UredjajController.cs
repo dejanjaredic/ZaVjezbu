@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Antiforgery.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,10 @@ using RadnoMjestoVjezba.Models;
 namespace RadnoMjestoVjezba.Controllers
 {
     [Route("api/[controller]")]
-    public class UredjajController : BaseController<Uredjaj>
+    public class UredjajController : BaseController<Uredjaj, UredjajDto>
     {
         protected readonly DataContext _context;
-        public UredjajController(DataContext context) : base(context)
+        public UredjajController(DataContext context, IMapper mapper) : base(context, mapper)
         {
         }
         /// <summary>
@@ -54,7 +55,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Podaci za unos. Napomena !!! Id se ne unosi</param>
         /// <returns></returns>
         [HttpPost("kreiranjeuredjaja")]
-        public IActionResult AddData(Uredjaj input)
+        public IActionResult AddData(UredjajDto input)
         {
             return base.AddData(input);
         }
@@ -65,7 +66,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">ime uredjaja</param>
         /// <returns></returns>
         [HttpPut("izmjenapoid/{id}")]
-        public IActionResult IzmjenaPoId(int id, Uredjaj input)
+        public IActionResult IzmjenaPoId(int id, UredjajDto input)
         {
             return base.IzmjenaPoId(id, input);
         }

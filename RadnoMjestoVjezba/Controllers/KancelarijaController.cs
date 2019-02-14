@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RadnoMjestoVjezba.Dto;
@@ -12,12 +13,12 @@ using RadnoMjestoVjezba.Models;
 namespace RadnoMjestoVjezba.Controllers
 {
     [Route("api/[controller]")]
-    public class KancelarijaController : BaseController<Kancelarija>
+    public class KancelarijaController : BaseController<Kancelarija, KreiranjeKancelarijeDtocs>
     {
         //protected readonly DataContext _context;
 
 
-        public KancelarijaController(DataContext context) : base(context)
+        public KancelarijaController(DataContext context, IMapper mapper) : base(context, mapper)
         {
         }
         /// <summary>
@@ -70,9 +71,14 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Opis Kancelarije</param>
         /// <returns></returns>
         [HttpPut("izmjenapoid/{id}")]
-        public IActionResult IzmjenaPoId(int id, Kancelarija input)
+        public IActionResult IzmjenaPoId(int id, KreiranjeKancelarijeDtocs input)
         {
             return base.IzmjenaPoId(id, input);
+        }
+        [HttpPost("kreiranjeuredjaja")]
+        public IActionResult AddData(KreiranjeKancelarijeDtocs input)
+        {
+            return base.AddData(input);
         }
 
     }

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RadnoMjestoVjezba.Dto;
 using RadnoMjestoVjezba.Models;
 
@@ -13,15 +17,16 @@ using RadnoMjestoVjezba.Models;
 namespace RadnoMjestoVjezba.Controllers
 {
     [Route("api/[controller]")]
-    public class BaseController<T> : Controller where T : class 
+    public class BaseController<T, TDto> : Controller where T : class where TDto : class
     {
         protected readonly DataContext _context;
         private readonly DbSet<T> _dbSet;
-
-        public BaseController(DataContext context)
+        protected readonly IMapper _mapper;
+        public BaseController(DataContext context, IMapper mapper)
         {
             _context = context;
             _dbSet = _context.Set<T>();
+            _mapper = mapper;
         }
 
         // GET: api/<controller>
@@ -32,12 +37,10 @@ namespace RadnoMjestoVjezba.Controllers
         [HttpGet("getalldata")]
         protected virtual IActionResult GetAllData()
         {
-            var getAll = _dbSet;
             
-            var getAllQuery =
-                getAll.Select(x => x);
-
-            return Ok(getAllQuery.ToList());
+            var getAll = _dbSet.ProjectTo<TDto>(_mapper.ConfigurationProvider).ToList();
+            
+            return Ok(getAll);
         }
         /// <summary>
         /// Brisanje entiteta po zadatom Id
@@ -80,12 +83,13 @@ namespace RadnoMjestoVjezba.Controllers
         protected virtual IActionResult GetDataById(int id)
         {
             
-            var uredjaji = _dbSet.Find(id);
-            return Ok(uredjaji);
+            var getData = _dbSet.Find(id);
+            var mappingData = _mapper.Map<TDto>(getData);
+            return Ok(mappingData);
         }
 
         [HttpPost("adddata")]
-        protected virtual IActionResult AddData(T input)
+        protected virtual IActionResult AddData(TDto input)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -95,9 +99,10 @@ namespace RadnoMjestoVjezba.Controllers
                     {
                         return NoContent();
                     }
-
-                    var uredjaj = input;
-                    _context.Add(uredjaj);
+                    
+                    
+                    var mapperData = _mapper.Map<T>(input);
+                    _dbSet.Add(mapperData);
                     _context.SaveChanges();
                     transaction.Commit();
                     return Ok(" Kreiran u Tabeli Uredjaji");
@@ -109,6 +114,8 @@ namespace RadnoMjestoVjezba.Controllers
                 }
             }
         }
+
+        
         /// <summary>
         /// Izmjena entiteta po Id
         /// </summary>
@@ -116,7 +123,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut("mijenjanje/{id}")]
-        protected virtual IActionResult IzmjenaPoId(int id, T input)
+        protected virtual IActionResult IzmjenaPoId(int id, TDto input)
         {
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -125,13 +132,14 @@ namespace RadnoMjestoVjezba.Controllers
                 {
 
 
-                    // var uredjaji = _dbSet.Find(id);
-                    var updated
-                    = _context.Attach(input).Entity;
-                    _context.Entry(updated).State = EntityState.Modified;
+                    var data = _dbSet.Find(id);
+                    //var updated
+                    //= _context.Attach(input).Entity;
+                    //_context.Entry(updated).State = EntityState.Modified;
+                    _mapper.Map(input, data);
                     _context.SaveChanges();
                     transaction.Commit();
-                    return Ok(updated);
+                    return Ok(data);
                 }
                 catch (Exception e)
                 {

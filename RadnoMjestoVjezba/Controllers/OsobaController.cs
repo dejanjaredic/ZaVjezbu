@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RadnoMjestoVjezba.Dto;
@@ -15,10 +16,10 @@ using RadnoMjestoVjezba.Models;
 namespace RadnoMjestoVjezba.Controllers
 {
     [Route("api/[controller]")]
-    public class OsobaController : BaseController<Osoba>
+    public class OsobaController : BaseController<Osoba, KreiranjeOsobeDto>
     {
         //protected readonly DataContext _context;
-        public OsobaController(DataContext context) : base(context)
+        public OsobaController(DataContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
@@ -95,7 +96,7 @@ namespace RadnoMjestoVjezba.Controllers
         /// <param name="input">Ime prezime</param>
         /// <returns></returns>
         [HttpPut("izmjenapostojeceosobe/{id}")]
-        public virtual IActionResult IzmjenaPoId(int id, IzmjenaOsobeDto input)
+        public virtual IActionResult IzmjenaPoId(int id, KreiranjeOsobeDto input)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
